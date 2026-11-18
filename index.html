@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mời Tuấn một bữa — Chuyển khoản qua mã QR</title>
+  <meta name="description" content="Chọn món hoặc nhập số tiền, quét mã VietQR để chuyển khoản TPBank.">
+  <meta property="og:title" content="Mời Tuấn một bữa — Quét QR là xong">
+  <meta property="og:description"
+    content="Bánh mì, phở, lẩu hay buffet — chọn món, quét mã VietQR, chuyển khoản trong vài giây.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="wrap top">
+    <a href="#" class="brand"><span class="logo">▣</span> Mời Tuấn</a>
+    <span class="stamp"><span data-bank="bankName"></span> · VietQR</span>
+  </header>
+
+  <section class="wrap hero">
+    <div class="rise">
+      <p class="eyebrow">Quét mã · chuyển khoản · xong</p>
+      <h1>Mời Tuấn<br><span class="marker">một bữa</span> nhé?</h1>
+      <p class="lead">Chào bạn, mình là người đi xin. Thời đại số rồi nên mình xin bằng mã QR cho văn minh: bạn chọn
+        món, mình ăn, ai cũng vui. Một ly trà đá thôi cũng được tính là đóng góp cho nền ẩm thực nước nhà.</p>
+      <p class="lead">Chọn một món bên dưới hoặc tự nhập số tiền. Mã QR hiện ngay, mở app ngân hàng quét là chuyển được.
+      </p>
+      <div class="cta">
+        <a class="btn btn-blue btn-xl" href="#chon-mon">Chọn món ngay</a>
+        <a class="btn btn-light btn-xl" href="#huong-dan">Cách chuyển khoản</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <img src="images/pho.jpg" alt="Tô phở nóng hổi">
+      <div class="hero-card-foot"><b>Tô Phở</b><span>50.000đ</span></div>
+    </div>
+  </section>
+
+  <main class="wrap layout">
+    <div class="col">
+      <section id="chon-mon">
+        <p class="eyebrow">01 — Thực đơn</p>
+        <h2>Hôm nay mời món gì?</h2>
+        <p class="muted">Bấm vào một món để tạo mã QR. Bấm lại lần nữa để bỏ chọn.</p>
+        <div id="menu" class="menu"></div>
+      </section>
+
+      <section class="card custom">
+        <div class="custom-head">
+          <div>
+            <p class="eyebrow">02 — Tùy tâm</p>
+            <h3>Tự nhập số tiền</h3>
+          </div>
+          <button id="unpick" class="stamp stamp-btn" type="button" hidden>✕ Bỏ chọn “<span></span>”</button>
+        </div>
+        <p id="lock-note" class="muted small" hidden>Bạn đang chọn món có sẵn nên ô này tạm khóa. Bỏ chọn món để nhập số
+          tiền khác.</p>
+        <form id="custom-form" class="custom-form">
+          <label class="amount-wrap">
+            <input id="amount" class="amount-input" inputmode="numeric" autocomplete="off" placeholder="Ví dụ: 200.000"
+              aria-label="Số tiền (VNĐ)">
+            <span>VNĐ</span>
+          </label>
+          <button id="create" type="submit" class="btn btn-blue btn-xl">Tạo QR</button>
+        </form>
+        <div id="hint" class="hint"></div>
+      </section>
+    </div>
+
+    <aside id="thanh-toan" class="panel">
+      <div class="panel-top"><span>03 — Quét để trả</span><span><i class="dot"></i> VietQR</span></div>
+      <div class="qr-frame">
+        <div class="qr-head"><b data-bank-upper="bankName"></b><span>NAPAS 247</span></div>
+        <div id="qr" class="qr"></div>
+        <div id="qr-amount" class="qr-amount"></div>
+        <p id="qr-empty" class="qr-empty">Vẫn quét được — bạn tự nhập số tiền trong app.</p>
+      </div>
+      <dl class="rows">
+        <div class="row">
+          <div>
+            <dt>Ngân hàng</dt>
+            <dd data-bank-upper="bankName"></dd>
+            <dd class="sub" data-bank="bankFullName"></dd>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <dt>Số tài khoản</dt>
+            <dd class="mono" data-bank="accountNumber"></dd>
+          </div><button id="copy-acc" class="btn btn-ghost" type="button">⧉ Sao chép</button>
+        </div>
+        <div class="row">
+          <div>
+            <dt>Chủ tài khoản</dt>
+            <dd data-bank="accountHolder"></dd>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <dt>Số tiền</dt>
+            <dd id="v-amount" class="mono"></dd>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <dt>Nội dung</dt>
+            <dd id="v-message" class="mono"></dd>
+          </div><button id="copy-msg" class="btn btn-ghost" type="button">⧉ Sao chép</button>
+        </div>
+      </dl>
+      <button id="download" class="btn btn-blue btn-xl full" type="button">⤓ Tải mã QR về máy</button>
+      <p class="panel-note">Kiểm tra đúng tên <b data-bank="accountHolderAscii"></b> trước khi xác nhận.</p>
+    </aside>
+  </main>
+
+  <section id="huong-dan" class="guide">
+    <div class="wrap">
+      <p class="eyebrow">Hướng dẫn</p>
+      <h2>Chuyển khoản trong 4 bước</h2>
+      <ol class="steps">
+        <li class="card"><span class="num">01</span>
+          <h3>Mở app ngân hàng</h3>
+          <p>Bất kỳ app nào ở Việt Nam có hỗ trợ quét VietQR / NAPAS 247.</p>
+        </li>
+        <li class="card"><span class="num">02</span>
+          <h3>Quét mã QR</h3>
+          <p>Chọn “Quét QR” rồi đưa camera vào mã. Trên điện thoại, bạn có thể tải ảnh QR rồi chọn từ thư viện.</p>
+        </li>
+        <li class="card"><span class="num">03</span>
+          <h3>Kiểm tra thông tin</h3>
+          <p>Đúng tên chủ tài khoản, số tiền và nội dung đã được điền sẵn.</p>
+        </li>
+        <li class="card"><span class="num">04</span>
+          <h3>Xác nhận chuyển</h3>
+          <p>Xác thực trong app của bạn như bình thường. Xong rồi, cảm ơn bạn nhiều!</p>
+        </li>
+      </ol>
+      <div class="safety">
+        <b>Lưu ý an toàn</b>
+        <ul>
+          <li>Trang này chỉ tạo mã QR, không tự xác nhận tiền đã vào tài khoản.</li>
+          <li>Không bao giờ yêu cầu bạn nhập mật khẩu, mã OTP hay thông tin đăng nhập ngân hàng.</li>
+          <li>Mọi giao dịch được thực hiện và xác thực trong chính app ngân hàng của bạn.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap foot">
+    <p class="foot-title">Cảm ơn bạn đã ghé qua — chúc bạn hôm nay ăn ngon!</p>
+    <p class="mono small muted">© <span id="year"></span> <span data-bank="accountHolder"></span> · <span
+        data-bank="bankName"></span> <span data-bank="accountNumber"></span></p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="qrcode.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
